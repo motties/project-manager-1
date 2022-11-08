@@ -7,17 +7,17 @@ class ProjectDAO extends DAO {
 
     private static $select = 'SELECT * FROM `TM1_Project`';
 
-    function __construct() {
+    public function __construct() {
         parent::__construct('Project');
     }
 
-    function startList(): void {
+    public function startList(): void {
         $sql = self::$select;
         $sql .= ' ORDER BY `TM1_Project`.`projectId`';
         $this->startListSql($sql);
     }
 
-    function get(?string $projectId) {
+    public function get(?string $projectId) {
         if (empty($projectId)) {
             return new Project;
         } else {
@@ -27,7 +27,7 @@ class ProjectDAO extends DAO {
         }
     }
 
-    function delete(int $projectId) {
+    public function delete(int $projectId) {
         $sql = 'DELETE FROM `TM1_Project` '
                 . ' WHERE `projectId` = ?';
         $args = [
@@ -36,7 +36,7 @@ class ProjectDAO extends DAO {
         $this->execute($sql, $args);
     }
 
-    function insert(Project $project) {
+    public function insert(Project $project) {
         $sql = 'INSERT INTO `TM1_Project` '
                 . ' (title, description, owner)'
                 . ' VALUES (?, ?, ?)';
@@ -48,7 +48,7 @@ class ProjectDAO extends DAO {
         $this->execute($sql, $args);
     }
 
-    function update(Project $project) {
+    public function update(Project $project) {
         $sql = 'UPDATE `TM1_Project` '
                 . ' SET title = ?, description = ?, owner = ? '
                 . ' WHERE projectId = ?';
@@ -61,7 +61,7 @@ class ProjectDAO extends DAO {
         $this->execute($sql, $args);
     }
 
-    function save(Project $project) {
+    public function save(Project $project) {
         if (empty($project->getProjectId())) {
             $this->insert($project);
         } else {
